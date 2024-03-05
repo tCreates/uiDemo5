@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -72,11 +75,24 @@ fun cardedImage(){
     )
 }
 
+@Composable
+fun floatingActionButton(drawableInt: Int){
+    FloatingActionButton(
+
+        onClick = { },
+        shape = RoundedCornerShape(0)
+    ) {
+        Icon(painterResource(id = drawableInt),
+            contentDescription = null)
+    }
+}
+
 
 @Preview(showBackground = false)
 @Composable
 fun GreetingPreview() {
     UiDemo5Theme {
-        cardedImage()
+        //cardedImage()
+        floatingActionButton(R.drawable.ic_launcher_foreground)
     }
 }
