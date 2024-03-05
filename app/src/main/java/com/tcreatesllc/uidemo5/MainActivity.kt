@@ -24,10 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -108,12 +110,32 @@ fun roundRect() {
     }
 }
 
+@Composable
+fun verticalLine(){
+    Canvas(
+        modifier = Modifier
+            .width(10.dp)
+            .height(200.dp)
+            .padding(start = 5.dp, end = 5.dp)
+
+    ) {
+        drawLine(
+            color = Color.White,
+            start = Offset(0f, 0f),
+            end = Offset(0f, size.height),
+            strokeWidth = 2f,
+            cap = StrokeCap.Square,
+        )
+    }
+}
+
 @Preview(showBackground = false)
 @Composable
 fun GreetingPreview() {
     UiDemo5Theme {
         //cardedImage()
        // floatingActionButton(R.drawable.ic_launcher_foreground)
-        roundRect()
+       // roundRect()
+        verticalLine()
     }
 }
