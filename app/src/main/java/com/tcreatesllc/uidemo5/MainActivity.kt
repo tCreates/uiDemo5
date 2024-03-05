@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,12 +22,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tcreatesllc.uidemo5.ui.theme.UiDemo5Theme
 
@@ -87,12 +93,27 @@ fun floatingActionButton(drawableInt: Int){
     }
 }
 
+@Composable
+fun roundRect() {
+    Canvas(
+        modifier = Modifier
+            .size(100.dp)
+
+    ) {
+        drawRoundRect(
+            color = Color.LightGray,
+            size = Size(width = size.width, height = size.height),
+            cornerRadius = CornerRadius(x = 10.dp.toPx(), y = 10.dp.toPx())
+        )
+    }
+}
 
 @Preview(showBackground = false)
 @Composable
 fun GreetingPreview() {
     UiDemo5Theme {
         //cardedImage()
-        floatingActionButton(R.drawable.ic_launcher_foreground)
+       // floatingActionButton(R.drawable.ic_launcher_foreground)
+        roundRect()
     }
 }
