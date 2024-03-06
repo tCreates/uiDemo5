@@ -7,12 +7,17 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -89,6 +94,7 @@ fun cardedImage() {
 fun floatingActionButton(drawableInt: Int, mods: Modifier) {
     FloatingActionButton(
         modifier = mods,
+        containerColor = Color.White,
         onClick = { },
         shape = RoundedCornerShape(0)
     ) {
@@ -104,7 +110,6 @@ fun roundRect() {
     Canvas(
         modifier = Modifier
             .size(100.dp)
-
     ) {
         drawRoundRect(
             color = Color.LightGray,
@@ -119,7 +124,7 @@ fun verticalLine() {
     Canvas(
         modifier = Modifier
             .width(10.dp)
-            .height(200.dp)
+            .fillMaxHeight()
             .padding(start = 5.dp, end = 5.dp)
 
     ) {
@@ -127,7 +132,7 @@ fun verticalLine() {
             color = Color.White,
             start = Offset(0f, 0f),
             end = Offset(0f, size.height),
-            strokeWidth = 2f,
+            strokeWidth = 4f,
             cap = StrokeCap.Square,
         )
     }
@@ -175,6 +180,35 @@ fun fabBox() {
     }
 }
 
+
+@Composable
+fun boxyColumn() {
+    LazyColumn(
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.height(600.dp)
+    ) {
+        items(2) { index ->
+            Row(modifier = Modifier.padding(top = 30.dp, bottom = 30.dp, start = 5.dp, end = 5.dp)) {
+                roundRect()
+            }
+        }
+    }
+}
+
+
+@Composable
+fun lineColumn() {
+   Row(
+        horizontalArrangement = Arrangement.Center,
+       verticalAlignment = Alignment.CenterVertically
+       // modifier = Modifier.width(700.dp)
+    ) {
+boxyColumn()
+        verticalLine()
+        boxyColumn()
+    }
+}
+
 @Preview(showBackground = false)
 @Composable
 fun GreetingPreview() {
@@ -183,6 +217,8 @@ fun GreetingPreview() {
         // floatingActionButton(R.drawable.ic_launcher_foreground)
         // roundRect()
         //verticalLine()
-        fabBox()
+        //fabBox()
+        //boxyColumn()
+        lineColumn()
     }
 }
