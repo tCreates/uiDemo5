@@ -1,11 +1,16 @@
 package com.tcreatesllc.uidemo5
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +18,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -37,6 +43,9 @@ import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -48,11 +57,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import com.tcreatesllc.uidemo5.ui.theme.UiDemo5Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        actionBar?.hide()
+
+        //Hide the status bars
+
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        } else {
+            window.insetsController?.apply {
+                hide(WindowInsets.Type.systemBars())
+                systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        }
         setContent {
             UiDemo5Theme {
                 // A surface container using the 'background' color from the theme
@@ -60,6 +83,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    mainLayout()
 
                 }
             }
@@ -79,7 +103,7 @@ val openSans = FontFamily(
 )
 
 @Composable
-fun cardedImage() {
+fun cardedImage(mods: Modifier) {
     val rainbowColorsBrush = remember {
         Brush.verticalGradient(
             listOf(
@@ -93,8 +117,8 @@ fun cardedImage() {
         painter = painterResource(id = R.drawable.cat_avif),
         contentDescription = "",
         contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .width(150.dp)
+        modifier = mods
+            .fillMaxWidth()
             .height(100.dp)
             .border(
                 BorderStroke(borderWidth, rainbowColorsBrush),
@@ -108,7 +132,7 @@ fun cardedImage() {
 @Composable
 fun floatingActionButton(drawableInt: Int, mods: Modifier) {
     FloatingActionButton(
-        modifier = mods,
+        modifier = mods.size(40.dp),
         containerColor = Color.White,
         onClick = { },
         shape = RoundedCornerShape(0)
@@ -124,12 +148,12 @@ fun floatingActionButton(drawableInt: Int, mods: Modifier) {
 fun roundRect() {
     Canvas(
         modifier = Modifier
-            .size(100.dp)
+            .size(40.dp)
     ) {
         drawRoundRect(
             color = Color.LightGray,
             size = Size(width = size.width, height = size.height),
-            cornerRadius = CornerRadius(x = 10.dp.toPx(), y = 10.dp.toPx())
+            cornerRadius = CornerRadius(x = 5.dp.toPx(), y = 5.dp.toPx())
         )
     }
 }
@@ -144,7 +168,7 @@ fun verticalLine() {
 
     ) {
         drawLine(
-            color = Color.White,
+            color = Color.Gray,
             start = Offset(0f, 0f),
             end = Offset(0f, size.height),
             strokeWidth = 4f,
@@ -155,8 +179,8 @@ fun verticalLine() {
 
 
 @Composable
-fun fabBox() {
-    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(250.dp)) {
+fun fabBox(mods: Modifier) {
+    Box(contentAlignment = Alignment.Center, modifier = mods.size(170.dp)) {
         floatingActionButton(
             drawableInt = R.drawable.whatsapp_svgrepo_com, mods = Modifier.align(
                 Alignment.TopCenter
@@ -200,13 +224,13 @@ fun fabBox() {
 fun boxyColumn() {
     LazyColumn(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.height(600.dp)
+        modifier = Modifier.height(300.dp)
     ) {
         items(2) { index ->
             Row(
                 modifier = Modifier.padding(
-                    top = 30.dp,
-                    bottom = 30.dp,
+                    top = 20.dp,
+                    bottom = 20.dp,
                     start = 5.dp,
                     end = 5.dp
                 )
@@ -219,11 +243,11 @@ fun boxyColumn() {
 
 
 @Composable
-fun lineColumn() {
+fun lineColumn(mods: Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-        // modifier = Modifier.width(700.dp)
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = mods
     ) {
         boxyColumn()
         verticalLine()
@@ -233,22 +257,26 @@ fun lineColumn() {
 
 
 @Composable
-fun timeText() {
+fun timeText(mods: Modifier) {
     Text(
-        text = "01\n\n\n\n34",
+        text = "01\n\n\n\n\n\n34",
         fontFamily = fontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 90.sp
+        fontSize = 160.sp,
+        modifier = mods.padding(start = 30.dp),
+        color = Color(0xFF1e2a36)
     )
 }
 
 @Composable
-fun rotatedText() {
-    Column(modifier = Modifier
-        .rotate(90f)
-        .height(260.dp)
-        .width(250.dp)
-        .padding(top = 40.dp)) {
+fun rotatedText(mods: Modifier) {
+    Column(
+        modifier = mods
+            .rotate(90f)
+            .height(300.dp)
+            .width(250.dp)
+            .padding(top = 80.dp)
+    ) {
         Text(
             text = "THURSDAY",
             fontFamily = openSans,
@@ -262,11 +290,68 @@ fun rotatedText() {
             fontSize = 13.5.sp,
         )
         Text(
-            text = "It seems to be haze outside at\nVisakhapatnam. Temperature is 80°F",
+            text = "It seems to be haze outside at Visakhapatnam. Temperature is 80°F",
             fontFamily = openSans,
             fontWeight = FontWeight.Bold,
             fontSize = 13.sp,
         )
+    }
+}
+
+@Composable
+fun mainLayout() {
+    Column(
+        Modifier
+            .fillMaxSize()
+    ) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(Blue),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .background(Color.LightGray)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 20.dp, bottom = 70.dp)
+                ) {
+                    timeText(Modifier.align(Alignment.TopStart))
+                    rotatedText(Modifier.align(Alignment.BottomStart))
+                }
+            }
+
+
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .background(Color(0xFF1e2a36))
+                    .padding(top = 20.dp, bottom = 20.dp, end = 10.dp, start = 10.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+
+                ) {
+                    cardedImage(Modifier.align(Alignment.TopCenter))
+                    lineColumn(
+                        Modifier
+                            .align(Alignment.Center)
+                            .padding(top = 120.dp, bottom = 190.dp)
+                    )
+                    fabBox(Modifier.align(Alignment.BottomCenter))
+                }
+            }
+
+        }
     }
 }
 
@@ -282,6 +367,13 @@ fun GreetingPreview() {
         //boxyColumn()
         // lineColumn()
         //timeText()
-        rotatedText()
+        //rotatedText()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            mainLayout()
+        }
+
     }
 }
