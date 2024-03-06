@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -57,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun cardedImage(){
+fun cardedImage() {
     val rainbowColorsBrush = remember {
         Brush.verticalGradient(
             listOf(
@@ -84,14 +86,16 @@ fun cardedImage(){
 }
 
 @Composable
-fun floatingActionButton(drawableInt: Int){
+fun floatingActionButton(drawableInt: Int, mods: Modifier) {
     FloatingActionButton(
-
+        modifier = mods,
         onClick = { },
         shape = RoundedCornerShape(0)
     ) {
-        Icon(painterResource(id = drawableInt),
-            contentDescription = null)
+        Icon(
+            painterResource(id = drawableInt),
+            contentDescription = null
+        )
     }
 }
 
@@ -111,7 +115,7 @@ fun roundRect() {
 }
 
 @Composable
-fun verticalLine(){
+fun verticalLine() {
     Canvas(
         modifier = Modifier
             .width(10.dp)
@@ -129,13 +133,56 @@ fun verticalLine(){
     }
 }
 
+
+@Composable
+fun fabBox() {
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(250.dp)) {
+        floatingActionButton(
+            drawableInt = R.drawable.whatsapp_svgrepo_com, mods = Modifier.align(
+                Alignment.TopCenter
+            )
+        )
+        floatingActionButton(
+            drawableInt = R.drawable.pinterest_svgrepo_com, mods = Modifier.align(
+                Alignment.CenterStart
+            )
+        )
+        floatingActionButton(
+            drawableInt = R.drawable.gallery_wide_svgrepo_com, mods = Modifier.align(
+                Alignment.Center
+            )
+        )
+        floatingActionButton(
+            drawableInt = R.drawable.youtube_svgrepo_com, mods = Modifier.align(
+                Alignment.CenterEnd
+            )
+        )
+        floatingActionButton(
+            drawableInt = R.drawable.chrome_svgrepo_com__1_, mods = Modifier.align(
+                Alignment.BottomStart
+            )
+        )
+        floatingActionButton(
+            drawableInt = R.drawable.message_4_svgrepo_com, mods = Modifier.align(
+                Alignment.BottomCenter
+            )
+        )
+        floatingActionButton(
+            drawableInt = R.drawable.call_192_svgrepo_com, mods = Modifier.align(
+                Alignment.BottomEnd
+            )
+        )
+    }
+}
+
 @Preview(showBackground = false)
 @Composable
 fun GreetingPreview() {
     UiDemo5Theme {
         //cardedImage()
-       // floatingActionButton(R.drawable.ic_launcher_foreground)
-       // roundRect()
-        verticalLine()
+        // floatingActionButton(R.drawable.ic_launcher_foreground)
+        // roundRect()
+        //verticalLine()
+        fabBox()
     }
 }
