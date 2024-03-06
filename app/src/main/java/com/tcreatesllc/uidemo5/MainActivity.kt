@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
@@ -40,9 +41,13 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tcreatesllc.uidemo5.ui.theme.UiDemo5Theme
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +67,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+val fontFamily = FontFamily(
+    Font(R.font.teko_light, FontWeight.Light),
+    Font(R.font.teko_regular, FontWeight.Normal),
+    Font(R.font.teko_semibold, FontWeight.Bold)
+)
+
+val openSans = FontFamily(
+    Font(R.font.opensans_regular, FontWeight.Normal),
+    Font(R.font.opensans_semibold, FontWeight.Bold)
+)
 
 @Composable
 fun cardedImage() {
@@ -188,7 +203,14 @@ fun boxyColumn() {
         modifier = Modifier.height(600.dp)
     ) {
         items(2) { index ->
-            Row(modifier = Modifier.padding(top = 30.dp, bottom = 30.dp, start = 5.dp, end = 5.dp)) {
+            Row(
+                modifier = Modifier.padding(
+                    top = 30.dp,
+                    bottom = 30.dp,
+                    start = 5.dp,
+                    end = 5.dp
+                )
+            ) {
                 roundRect()
             }
         }
@@ -198,18 +220,57 @@ fun boxyColumn() {
 
 @Composable
 fun lineColumn() {
-   Row(
+    Row(
         horizontalArrangement = Arrangement.Center,
-       verticalAlignment = Alignment.CenterVertically
-       // modifier = Modifier.width(700.dp)
+        verticalAlignment = Alignment.CenterVertically
+        // modifier = Modifier.width(700.dp)
     ) {
-boxyColumn()
+        boxyColumn()
         verticalLine()
         boxyColumn()
     }
 }
 
-@Preview(showBackground = false)
+
+@Composable
+fun timeText() {
+    Text(
+        text = "01\n\n\n\n34",
+        fontFamily = fontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 90.sp
+    )
+}
+
+@Composable
+fun rotatedText() {
+    Column(modifier = Modifier
+        .rotate(90f)
+        .height(260.dp)
+        .width(250.dp)
+        .padding(top = 40.dp)) {
+        Text(
+            text = "THURSDAY",
+            fontFamily = openSans,
+            fontWeight = FontWeight.Bold,
+            fontSize = 35.sp,
+        )
+        Text(
+            text = "Today is 19th January",
+            fontFamily = openSans,
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.5.sp,
+        )
+        Text(
+            text = "It seems to be haze outside at\nVisakhapatnam. Temperature is 80°F",
+            fontFamily = openSans,
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+        )
+    }
+}
+
+@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     UiDemo5Theme {
@@ -219,6 +280,8 @@ fun GreetingPreview() {
         //verticalLine()
         //fabBox()
         //boxyColumn()
-        lineColumn()
+        // lineColumn()
+        //timeText()
+        rotatedText()
     }
 }
